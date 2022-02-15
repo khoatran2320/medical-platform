@@ -11,6 +11,9 @@ def add_device():
     body = request.get_json()
     return jsonify(body), 201
 
+@app.route('/', methods=["GET"])
+def home():
+    return "hello world\n"
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host="0.0.0.0")
