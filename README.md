@@ -13,3 +13,18 @@ The platform allows for multiple user roles such as doctors, patients, nurses, a
 2. Patient can write a text or upload video or voice message to the MP
 3. Patient can book an appointment with the MP
 4. Patient can view their medical measurements
+
+## API
+- `/add-device` [`POST`]: This route expects device details to save to database. In the body, there should be these keys:
+    - `deviceType: Integer` -- the device type
+        1. thermometer
+        2. scale
+        3. pulse
+        4. oximeter
+        5. glucometer
+        6. blood pressure
+    - `datePurchased: String` -- the date of purchase for device. The format is `mm/dd/yyyy`
+    - `assignedUser: String` -- the name of the user to which the deviced is assigned
+    - `assigner: String` -- the name of the user that assigned the device
+    - `firmwareVersion: Float` -- the firmware version of the device
+    - `serialNumber: Integer` -- the serial number of the device
