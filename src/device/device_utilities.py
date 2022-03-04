@@ -1,4 +1,4 @@
-from Models.Device import Device
+from ..Models.Device import Device
 
 def make_device_obj(request_json):
     print(request_json)

@@ -1,5 +1,5 @@
 from mongoengine import (Document, StringField, FloatField, ReferenceField, IntField)
-from Models.User import User
+from .User import User
 
 class Device(Document):
     deviceType = IntField(min_value=1, max_value=6)

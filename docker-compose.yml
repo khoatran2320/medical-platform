@@ -2,8 +2,13 @@ version: '3.8'
 
 services:
   device-service:
-    build: .
+    build:
+      context: .
+      args:
+        - db_pass=${db_pass:-default}
+    environment: 
+      - db_pass=${db_pass:-default}
     volumes:
       - .:/device-app
     ports: 
-      - 5000:5000
+      - 4000:4000

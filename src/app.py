@@ -2,7 +2,7 @@ import os
 from flask import Flask, jsonify, abort, request
 from flask_cors import CORS
 from mongoengine import connect
-from device.device_utilities import make_device_obj
+from .device.device_utilities import make_device_obj
 
 #cloud database name
 db_name = "patient-monitor"
@@ -29,7 +29,7 @@ def add_device():
 
 @app.route('/', methods=["GET"])
 def home():
-    return "hello world\n"
+    return jsonify("hello world\n")
 
 if __name__ == '__main__':
     app.run(debug=True)
