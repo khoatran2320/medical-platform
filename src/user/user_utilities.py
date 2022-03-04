@@ -4,8 +4,12 @@ from ..utils.utils import encrypt_pass, parse_date
 def make_user_obj(request_json):
     if not parse_date(request_json["dateOfBirth"]):
         return None
-    hpw = encrypt_pass(request_json["password"])
 
+    if not parse_gender(request_json["gender"]):
+        return None
+
+    hpw = encrypt_pass(request_json["password"])
+    
     return User(
         firstName=request_json["firstName"],
         lastName=request_json["lastName"], 
@@ -18,3 +22,7 @@ def make_user_obj(request_json):
         age=request_json["age"]
     )
 
+def parse_gender(gn):
+    if gn != 'male' or gn != 'female' or gn != 'nonBinary':
+        return False
+    return True
