@@ -1,3 +1,4 @@
+import os
 from mongoengine import connect
 from src.Models.Device import Device as DeviceModel
 def test_saveDevice():
