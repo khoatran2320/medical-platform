@@ -1,115 +1,119 @@
 from os import stat
-from flask import jsonify
-from flask_restx import Resource, Namespace
+from flask import Blueprint
+from flask_restx import Resource, Namespace, Api
 from Response import Response
 
+
+# blueprint = Blueprint('api', __name__)
+# api = Api(blueprint, doc='/doc/')
+
 # Import models
-from Models.Device import Device as DeviceModel
+from Models.User import User as UserModel
 
 # Import parsers
-from parsers.device import _device_parser, _device_id_parser
+from parsers.user import _user_parser, _user_id_parser
 
-device_ns = Namespace('device', 'Device methods')
+user_ns = Namespace('user', 'User methods')
+# api.add_namespace(user_ns)
 
-
-@device_ns.route('/')
-class Devices(Resource):
+@user_ns.route('/')
+class Users(Resource):
     """
-    Shows a list of devices, and lets you POST to add new device
+    Shows a list of users, and lets you POST to add new user
     """
-    @device_ns.doc(
+    @user_ns.doc(
         responses={
-            200: "Added device",
-            400: "Unable to add device",
+            200: "Added user",
+            400: "Unable to add user",
         },
-        parser=_device_parser
+        parser=_user_parser
     )
     def post(self):
-        """Add new device"""
-        data = _device_parser.parse_args()
+        """Add new user"""
+        data = _user_parser.parse_args()
 
-        # create new device
-        new_device = DeviceModel()
-        new_device.set(data)
+        # create new user
+        new_user = UserModel()
+        new_user.set(data)
 
         try:
-            new_device.save()
-            return Response("Added device", status=200)
+            new_user.save()
+            return Response("Added user", status=200)
         except:
-            return Response("Unable to add device", status=400)
+            return Response("Unable to add user", status=400)
 
-    @device_ns.doc(
+    @user_ns.doc(
         response={
-            200: "Get devices successfully",
-            400: "Unable to get devices",
+            200: "Get users successfully",
+            400: "Unable to get users",
         }
     )
     def get(self):
-        """Get all devices"""
+        """Get all users"""
         try:
-            data = DeviceModel.objects.all()
+            data = UserModel.objects.all()
             # serialize
-            devices = [device.json() for device in data]
-            return Response({"message": "Get device successfully", "devices": devices}, status=200)
+            users = [user.json() for user in data]
+            return Response({"message": "Get users successfully", "users": users}, status=200)
         except:
-            return Response("Unable to get devices",status=200)
+            return Response("Unable to get users", status=400)
 
 
-@device_ns.route('/detail')
-class Device(Resource):
+@user_ns.route('/detail')
+class User(Resource):
     """
-    Shows detail about a device, and lets you DELETE, PUT a device
+    Shows detail about a user, and lets you DELETE, PUT a user
     """
-    @device_ns.doc(
-        parser=_device_id_parser,
+    @user_ns.doc(
+        parser=_user_id_parser,
         responses={
-            200: "Get device successfully",
-            400: "Unable to get device",
+            200: "Get user successfully",
+            400: "Unable to get user",
         }
     )
     def get(self):
-        """Get detail about a device"""
-        data = _device_id_parser.parse_args()
+        """Get detail about a user"""
+        data = _user_id_parser.parse_args()
         try:
-            device = DeviceModel.objects(_id=data['id']).first()
-            return Response({"message": "Get device successfully", "device": device.json()}, status=200)
+            user = UserModel.objects(_id=data['id']).first()
+            return Response({"message": "Get user successfully", "user": user.json()}, status=200)
         except:
-            return Response("Unable to get device", status=400)
+            return Response("Unable to get user", status=400)
 
-    @device_ns.doc(
-        parser=_device_id_parser,
+    @user_ns.doc(
+        parser=_user_id_parser,
         responses={
-            200: "Updated device",
-            400: "Unable to update device",
+            200: "Updated user",
+            400: "Unable to update user",
         }
     )
     def put(self):
-        """Updates a device"""
-        data = _device_id_parser.parse_args()
+        """Updates a user"""
+        data = _user_id_parser.parse_args()
         try:
-            device = DeviceModel.objects(_id=data['id']).first()
-            device.update(data)
-            device.save()
-            return Response({"message": "Updated device", "device": device.json()}, status=200)
+            user = UserModel.objects(_id=data['id']).first()
+            user.update(data)
+            user.save()
+            return Response({"message": "Updated user", "user": user.json()}, status=200)
 
         except Exception as e:
             print(e)
-            return Response("Unable to update device", status=400)
+            return Response("Unable to update user", status=400)
 
-    @device_ns.doc(
-        parser=_device_id_parser,
+    @user_ns.doc(
+        parser=_user_id_parser,
         responses={
-            200: "Deleted device",
-            400: "Unable to delete device",
+            200: "Deleted user",
+            400: "Unable to delete user",
         }
     )
     def delete(self):
-        """Deletes a device"""
-        data = _device_id_parser.parse_args()
+        """Deletes a user"""
+        data = _user_id_parser.parse_args()
         try:
-            device = DeviceModel.objects(_id=data['id']).first()
-            device._delete()
-            return Response("Deleted device", status=200)
+            user = UserModel.objects(_id=data['id']).first()
+            user._delete()
+            return Response("Deleted user", status=200)
 
         except:
-            return Response("Unable to delete device", status=200)
+            return Response("Unable to delete user", status=400)
