@@ -4,7 +4,7 @@ from flask import Flask, Blueprint, redirect
 from flask_restx import Api
 from flask_cors import CORS
 from mongoengine import connect
-from controllers.deviceController import blueprint as api
+from controllers.appV1 import blueprint as api1
 
 """
 logging config
@@ -35,7 +35,7 @@ Flask startup
 """
 #start Flask app
 app = Flask(__name__)
-app.register_blueprint(api, url_prefix='/api/1')
+app.register_blueprint(api1)
 CORS(app)
 
 @app.route('/', methods=["GET"])

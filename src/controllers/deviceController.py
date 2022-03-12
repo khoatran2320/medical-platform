@@ -4,8 +4,8 @@ from flask_restx import Resource, Namespace, Api
 from Response import Response
 
 
-blueprint = Blueprint('api', __name__)
-api = Api(blueprint, doc='/doc/')
+# blueprint = Blueprint('api', __name__)
+# api = Api(blueprint, doc='/doc/')
 
 # Import models
 from Models.Device import Device as DeviceModel
@@ -14,7 +14,7 @@ from Models.Device import Device as DeviceModel
 from parsers.device import _device_parser, _device_id_parser
 
 device_ns = Namespace('device', 'Device methods')
-api.add_namespace(device_ns)
+# api.add_namespace(device_ns)
 
 @device_ns.route('/')
 class Devices(Resource):
@@ -55,8 +55,9 @@ class Devices(Resource):
             # serialize
             devices = [device.json() for device in data]
             return Response({"message": "Get device successfully", "devices": devices}, status=200)
-        except:
-            return Response("Unable to get devices",status=200)
+        except Exception as e:
+            print(e)
+            return Response("Unable to get devices",status=400)
 
 
 @device_ns.route('/detail')
@@ -116,4 +117,4 @@ class Device(Resource):
             return Response("Deleted device", status=200)
 
         except:
-            return Response("Unable to delete device", status=200)
+            return Response("Unable to delete device", status=400)
