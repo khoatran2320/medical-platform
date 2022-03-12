@@ -6,7 +6,7 @@ class User(Document):
     lastName = StringField(max_length=40, required=True)
     email = EmailField(required=True)
     password = StringField(required=True)
-    userType = IntField(min_value=1, max_value=6, required=True)
+    userType = StringField(min_value=1, max_value=6, required=True)
     gender = StringField(max_length=40, required=True)
     dateOfBirth = StringField(max_length=40, required=True)
     address = StringField(max_length=40, required=True)
