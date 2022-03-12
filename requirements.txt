@@ -4,3 +4,4 @@ flask_cors==3.0.10
 mongoengine==0.23.1
 pymongo[tls,srv]==3.6.1
 python_bcrypt==0.3.2
+flask-restx==0.5.1
