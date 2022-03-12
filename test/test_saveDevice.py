@@ -3,7 +3,7 @@ from mongoengine import connect
 from src.Models.Device import Device as DeviceModel
 def test_saveDevice():
     test_device = {
-        "_id": "9012374",
+        "id": "9012374",
         "deviceType": "THERMOMETER",
         "datePurchased": "02/12/2000",
         "assignedUser": "Jon Wick",
