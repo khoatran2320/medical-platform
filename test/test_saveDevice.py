@@ -26,7 +26,7 @@ def test_saveDevice():
     device.save()
 
     #retrieve device
-    retrieved_device = DeviceModel.objects(assignedUser=test_device['_id']).first()
+    retrieved_device = DeviceModel.objects(assignedUser=test_device['id']).first()
     return retrieved_device.to_json() == test_device
     
 
