@@ -1,6 +1,10 @@
 import os
 from mongoengine import connect
 from src.Models.Device import Device as DeviceModel
+
+"""
+test saving a device to the database. Connection to live db is unavailable due to IP filtering. Will have to manually enable global IP request for test to pass under GitHub Actions environment.
+"""
 def test_saveDevice():
     test_device = {
         "id": "9012374",
@@ -26,7 +30,7 @@ def test_saveDevice():
     device.save()
 
     #retrieve device
-    retrieved_device = DeviceModel.objects(id=test_device['id']).first()
+    retrieved_device = DeviceModel.objects(_id=test_device['id']).first()
     return retrieved_device.json() == test_device
     
 
