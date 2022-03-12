@@ -2,7 +2,7 @@ from os import stat
 from flask import Blueprint
 from flask_restx import Resource, Namespace, Api
 from Response import Response
-
+from utils.utils import encrypt_pass
 
 # blueprint = Blueprint('api', __name__)
 # api = Api(blueprint, doc='/doc/')
@@ -31,11 +31,10 @@ class Users(Resource):
     def post(self):
         """Add new user"""
         data = _user_parser.parse_args()
-
+        data["password"] = encrypt_pass(data["password"])
         # create new user
         new_user = UserModel()
         new_user.set(data)
-
         try:
             new_user.save()
             return Response("Added user", status=200)

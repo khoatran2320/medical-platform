@@ -2,6 +2,7 @@ import os
 from mongoengine import connect
 import pytest
 from src.Models.User import User as UserModel
+from src.utils.utils import encrypt_pass
 
 """
 test saving a user to the database. Connection to live db is unavailable due to IP filtering. Will have to manually enable global IP request for test to pass under GitHub Actions environment.
@@ -40,6 +41,7 @@ def test_saveUser(database):
 
     #retrieve device
     retrieved_user = UserModel.objects(_id=test_user['id']).first()
+    test_user['password'] = encrypt_pass(test_user['password'])
     return retrieved_user.json() == test_user
     
 
