@@ -8,7 +8,7 @@ def date_type(date):
         date_time = datetime.strptime(date, "%m/%d/%Y")
     except ValueError:
         raise ValueError('This is not date type')
-    return parse(date)
+    return date
 
 # Swagger documentation
 date_type.__schema__ = {'type': 'string', 'format': 'mm/dd/yyyy'}
