@@ -12,9 +12,45 @@ class User(Document):
     address = StringField(max_length=40, required=True)
     age = IntField(min_value=0, max_value=200, required=True)
 
+    """
+    set document fields
+    """
+    def set(self, data):
+        self._id = data['id']
+        self.firstName = data['firstName']
+        self.lastName = data['lastName']
+        self.email = data['email']
+        self.password = data['password']
+        self.userType = data['userType']
+        self.gender = data['gender']
+        self.dateOfBirth = data['dateOfBirth']
+        self.address = data['address']
+        self.age = data['age']
+        
+
+    """
+    update document fields
+    """
+    def update(self, data):
+        for key, val in data.items():
+            if val is not None and key != 'id':
+                self[key] = val
+
+    """
+    delete document
+    """
+    def delete(self):
+        self.delete()
+
+    """
+    get full name of user
+    """
     def get_fullname(self):
         return self.firstName + ' ' + self.lastName
 
+    """
+    returns json of fields
+    """
     def json(self):
         return {
             'id': self._id,
