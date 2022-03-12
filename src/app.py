@@ -1,12 +1,10 @@
 import os
 import logging 
-from flask import Flask, jsonify, abort, request
+from flask import Flask, Blueprint, redirect
+from flask_restx import Api
 from flask_cors import CORS
 from mongoengine import connect
-from .device.device_utilities import make_device_obj
-from .user.user_utilities import make_user_obj
-from .Models.Device import Device
-
+from controllers.deviceController import blueprint as api
 
 """
 logging config
@@ -37,34 +35,12 @@ Flask startup
 """
 #start Flask app
 app = Flask(__name__)
+app.register_blueprint(api, url_prefix='/api/1')
 CORS(app)
-
-@app.route('/add-device', methods=["POST"])
-def add_device():
-    retrieved_device = Device.objects
-    print(retrieved_device)
-    body = request.json
-    try:
-        device = make_device_obj(body)
-        device.save()
-        return "success!", 200
-    except Exception as e:
-        return "Invalid device fields", 400
-
-@app.route('/add-user', methods=["POST"])
-def add_user():
-    body = request.json
-    try:
-        user = make_user_obj(body)
-        user.save()
-    except Exception as e:
-        print(e)
-        return "Invalid user fields"
-    return "success!", 200
 
 @app.route('/', methods=["GET"])
 def home():
-    return "hello world"
+    return redirect('/api/1/doc')
 
 if __name__ == '__main__':
     app.run(debug=True)

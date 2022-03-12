@@ -1,11 +1,7 @@
 from os import stat
-from flask import Blueprint
-from flask_restx import Resource, Namespace, Api
+from flask import jsonify
+from flask_restx import Resource, Namespace
 from Response import Response
-
-
-blueprint = Blueprint('api', __name__)
-api = Api(blueprint, doc='/doc/')
 
 # Import models
 from Models.Device import Device as DeviceModel
@@ -14,7 +10,7 @@ from Models.Device import Device as DeviceModel
 from parsers.device import _device_parser, _device_id_parser
 
 device_ns = Namespace('device', 'Device methods')
-api.add_namespace(device_ns)
+
 
 @device_ns.route('/')
 class Devices(Resource):

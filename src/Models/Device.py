@@ -3,11 +3,11 @@ from .User import User
 
 class Device(Document):
     _id = StringField(required=True, primary_key=True)
-    deviceType = IntField(min_value=1, max_value=6, required=True)
+    deviceType = StringField(required=True)
     datePurchased = StringField(required=True)
     assignedUser = StringField(default="")
     assigner = StringField(default="")
-    firmwareVersion = FloatField(min_value=0.0, required=True)
+    firmwareVersion = StringField(required=True)
     serialNumber = IntField(min_value=0, required=True)
 
     """
