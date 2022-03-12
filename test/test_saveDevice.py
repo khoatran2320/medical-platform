@@ -1,15 +1,13 @@
 from mongoengine import connect
-from device.device_utilities import make_device_obj
-from Models.Device import Device
-
-
+from src.Models.Device import Device as DeviceModel
 def test_saveDevice():
     test_device = {
-        "deviceType": 1,
+        "_id": "9012374",
+        "deviceType": "THERMOMETER",
         "datePurchased": "02/12/2000",
         "assignedUser": "Jon Wick",
         "assigner": "John WIck",
-        "firmwareVersion": 1.2,
+        "firmwareVersion": "12.123",
         "serialNumber": 12345
     }   
     #db name
@@ -22,11 +20,12 @@ def test_saveDevice():
     URI = "mongodb+srv://khoa:{}@cluster0.bfh4g.mongodb.net/{}?retryWrites=true&w=majority".format(db_pass, db_name)
     db = connect(host=URI)
     #save device
-    device = make_device_obj(test_device)
+    device = DeviceModel()
+    device.set(test_device)
     device.save()
 
     #retrieve device
-    retrieved_device = Device.objects(assignedUser=test_device['assignedUser']).first()
+    retrieved_device = DeviceModel.objects(assignedUser=test_device['_id']).first()
     return retrieved_device.to_json() == test_device
     
 
