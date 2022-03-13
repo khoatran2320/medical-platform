@@ -87,3 +87,35 @@ def test_delete_message(app, client):
     })
     assert response.status_code == 400
     assert response.json['message'] == 'Unable to get message'
+
+def test_query_recent_messages(app, client):
+    url = f'{BASE_URL}/recent-messages'
+    data = {
+        "amount": "10",
+    }
+    response = client.get(url, json=data)
+    assert response.status_code == 200
+    assert response.json['message'] == 'Get messages successfully'
+    assert len(response.json['chats']) > 0 and len(response.json['chats']) <= 10
+
+def test_query_received_messages(app, client):
+    url = f'{BASE_URL}/user-received-messages'
+    data = {
+        "userId": "123252",
+    }
+    response = client.get(url, json=data)
+    assert response.status_code == 200
+    assert response.json['message'] == 'Get user messages successfully'
+    assert len(response.json['chats']) > 0
+    assert response.json['chats'][0]['toUser'] == "123252"
+
+def test_query_sent_messages(app, client):
+    url = f'{BASE_URL}/user-sent-messages'
+    data = {
+        "userId": "12332252",
+    }
+    response = client.get(url, json=data)
+    assert response.status_code == 200
+    assert response.json['message'] == 'Get user messages successfully'
+    assert len(response.json['chats']) > 0
+    assert response.json['chats'][0]['fromUser'] == "12332252"
