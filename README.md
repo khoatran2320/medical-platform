@@ -38,6 +38,9 @@ The platform allows for multiple user roles such as doctors, patients, nurses, a
     <li>
       <a href="#documentation">Documentation</a>
     </li>
+    <li>
+      <a href="#tests">Tests</a>
+    </li>
   </ol>
 </details>
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -139,4 +142,19 @@ Flask app runs on http://localhost:5000/
 ## Documentation  
 
 API documentation can be found at the url http://localhost:5000/api/1/doc/ once the app has started.
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Tests  
+This module uses pytest to perform unit tests. The tests currently has a 93% coverage. 
+
+To install pytest:
+
+```
+pip install pytest
+```
+
+To run pytest:
+```
+pytest
+```
 <p align="right">(<a href="#top">back to top</a>)</p>
