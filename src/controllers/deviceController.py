@@ -1,17 +1,17 @@
 from os import stat
 from flask import Blueprint
 from flask_restx import Resource, Namespace, Api
-from Response import Response
+from ..Response import Response
 
 
 # blueprint = Blueprint('api', __name__)
 # api = Api(blueprint, doc='/doc/')
 
 # Import models
-from Models.Device import Device as DeviceModel
+from ..Models.Device import Device as DeviceModel
 
 # Import parsers
-from parsers.device import _device_parser, _device_id_parser
+from ..parsers.device import _device_parser, _device_id_parser,_device_put_parser
 
 device_ns = Namespace('device', 'Device methods')
 # api.add_namespace(device_ns)
@@ -34,9 +34,9 @@ class Devices(Resource):
 
         # create new device
         new_device = DeviceModel()
-        new_device.set(data)
 
         try:
+            new_device.set(data)
             new_device.save()
             return Response("Added device", status=200)
         except:
@@ -54,7 +54,7 @@ class Devices(Resource):
             data = DeviceModel.objects.all()
             # serialize
             devices = [device.json() for device in data]
-            return Response({"message": "Get device successfully", "devices": devices}, status=200)
+            return Response({"message": "Get devices successfully", "devices": devices}, status=200)
         except Exception as e:
             print(e)
             return Response("Unable to get devices",status=400)
@@ -90,7 +90,7 @@ class Device(Resource):
     )
     def put(self):
         """Updates a device"""
-        data = _device_id_parser.parse_args()
+        data = _device_put_parser.parse_args()
         try:
             device = DeviceModel.objects(_id=data['id']).first()
             device.update(data)
@@ -113,8 +113,9 @@ class Device(Resource):
         data = _device_id_parser.parse_args()
         try:
             device = DeviceModel.objects(_id=data['id']).first()
-            device._delete()
+            device.delete()
             return Response("Deleted device", status=200)
 
-        except:
+        except Exception as e:
+            print(e)
             return Response("Unable to delete device", status=400)

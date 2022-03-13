@@ -1,15 +1,15 @@
 from flask import Blueprint
 from flask_restx import Resource, Namespace
-from Response import Response
+from ..Response import Response
 
 # Import models
-from Models.Device import Device as DeviceModel
-from Models.DeviceMeasurement import DeviceMeasurement as DeviceMeasurementModel
-from Models.User import User as UserModel
+from ..Models.Device import Device as DeviceModel
+from ..Models.DeviceMeasurement import DeviceMeasurement as DeviceMeasurementModel
+from ..Models.User import User as UserModel
 
 
 # Import parsers
-from parsers.device_measurement import _measurement_parser, _measurement_id_parser, _measurement_userId_parser
+from ..parsers.device_measurement import _measurement_parser, _measurement_id_parser, _measurement_userId_parser
 
 device_measurement_ns = Namespace('device-measurements', 'Device measurement methods')
 # api.add_namespace(device_measurement_ns)
@@ -120,7 +120,7 @@ class Measurement(Resource):
         data = _measurement_id_parser.parse_args()
         try:
             measurement = DeviceMeasurementModel.objects(_id=data['id']).first()
-            measurement._delete()
+            measurement.delete()
             return Response("Deleted measurement", status=200)
 
         except:

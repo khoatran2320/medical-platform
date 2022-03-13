@@ -54,12 +54,6 @@ class DeviceMeasurement(Document):
                 self[key] = val
 
     """
-    delete document
-    """
-    def delete(self):
-        self.delete()
-
-    """
     returns json of fields
     """
     def json(self):

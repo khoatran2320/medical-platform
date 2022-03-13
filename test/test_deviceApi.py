@@ -1,13 +1,4 @@
 import pytest 
-from src.app import app as flask_app
-@pytest.fixture
-def app():
-    yield flask_app
-
-@pytest.fixture
-def client(app):
-    return app.test_client()
-
 
 BASE_URL = '/api/1/device'
 
@@ -39,10 +30,9 @@ def test_add_invalid_device(app, client):
     }
     response = client.post(url, json=data)
     assert response.status_code == 400
-    assert response.json['message'] == 	"Unable to add device"
 
 def test_get_alldevice(app, client):
-    """Test getting info about a device"""
+    """Test getting all devices"""
     # get all devices
     url = f'{BASE_URL}/'
     response = client.get(url)
@@ -69,7 +59,7 @@ def test_add_get_device(app, client):
     })
     assert response.status_code == 200
     assert response.json['message'] == 'Get device successfully'
-    assert response.json['data']['id'] == '12325432'
+    assert response.json['device']['id'] == '12325432'
 
 
 def test_update_device(app, client):
@@ -94,8 +84,8 @@ def test_update_device(app, client):
     })
     assert response.status_code == 200
     assert response.json['message'] == 'Updated device'
-    assert response.json['data']['id'] == '4325323'
-    assert response.json['data']['type'] == 'OXIMETER'
+    assert response.json['device']['id'] == '4325323'
+    assert response.json['device']['deviceType'] == 'OXIMETER'
 
 def test_invalid_update(app, client):
     url = f'{BASE_URL}/detail'
@@ -110,8 +100,8 @@ def test_delete_device(app, client):
     # add a device
     url = f'{BASE_URL}/'
     data = {
-        "id": "5432532",
-        "type": "SCALE",
+        "id": "5433",
+        "deviceType": "SCALE",
         "datePurchased": "03/10/2012",
         "firmwareVersion": "12324",
         "serialNumber": "63452"
@@ -123,7 +113,7 @@ def test_delete_device(app, client):
     # delete the device
     url = f'{BASE_URL}/detail'
     response = client.delete(url, query_string={
-        "id": "5432532",
+        "id": "5433",
     })
     assert response.status_code == 200
     assert response.json['message'] == 'Deleted device'
@@ -131,7 +121,7 @@ def test_delete_device(app, client):
     # get the same device, should be 400 status code
     url = f'{BASE_URL}/detail'
     response = client.get(url, query_string={
-        "id": "5432532"
+        "id": "5433"
     })
     assert response.status_code == 400
     assert response.json['message'] == 'Unable to get device'

@@ -4,7 +4,7 @@ from flask import Flask, Blueprint, redirect
 from flask_restx import Api
 from flask_cors import CORS
 from mongoengine import connect
-from controllers.appV1 import blueprint as api1
+from .controllers.appV1 import blueprint as api1
 
 """
 logging config

@@ -37,12 +37,6 @@ class User(Document):
                 self[key] = val
 
     """
-    delete document
-    """
-    def delete(self):
-        self.delete()
-
-    """
     get full name of user
     """
     def get_fullname(self):

@@ -1,17 +1,17 @@
 from os import stat
 from flask import Blueprint
 from flask_restx import Resource, Namespace, Api
-from Response import Response
-from utils.utils import encrypt_pass
+from ..Response import Response
+from ..utils.utils import encrypt_pass
 
 # blueprint = Blueprint('api', __name__)
 # api = Api(blueprint, doc='/doc/')
 
 # Import models
-from Models.User import User as UserModel
+from ..Models.User import User as UserModel
 
 # Import parsers
-from parsers.user import _user_parser, _user_id_parser
+from ..parsers.user import _user_parser, _user_id_parser
 
 user_ns = Namespace('user', 'User methods')
 # api.add_namespace(user_ns)
@@ -111,7 +111,7 @@ class User(Resource):
         data = _user_id_parser.parse_args()
         try:
             user = UserModel.objects(_id=data['id']).first()
-            user._delete()
+            user.delete()
             return Response("Deleted user", status=200)
 
         except:

@@ -1,12 +1,12 @@
 from flask_restx import Resource, Namespace
-from Response import Response
+from ..Response import Response
 
 
 # Import models
-from Models.Chat import Chat as ChatModel
+from ..Models.Chat import Chat as ChatModel
 
 # Import parsers
-from parsers.chat import _chat_parser, _chat_id_parser, _chat_user_parser, _chat_number_parser
+from ..parsers.chat import _chat_parser, _chat_id_parser, _chat_user_parser, _chat_number_parser
 
 chat_ns = Namespace('chat', 'Chat methods')
 
@@ -107,7 +107,7 @@ class Message(Resource):
         data = _chat_id_parser.parse_args()
         try:
             message = ChatModel.objects(_id=data['id']).first()
-            message._delete()
+            message.delete()
             return Response("Deleted message", status=200)
 
         except:

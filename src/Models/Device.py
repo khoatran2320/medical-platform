@@ -36,11 +36,6 @@ class Device(Document):
             if val is not None and key != 'id':
                 self[key] = val
 
-    """
-    delete document
-    """
-    def delete(self):
-        self.delete()
 
     """
     returns json of fields
