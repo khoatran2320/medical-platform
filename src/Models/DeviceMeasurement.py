@@ -1,4 +1,5 @@
-from mongoengine import (Document, StringField, IntField)
+from mongoengine import (Document, StringField, IntField, DateTimeField)
+from datetime import datetime
 from .User import User
 
 class DeviceMeasurement(Document):
@@ -8,6 +9,7 @@ class DeviceMeasurement(Document):
     userId = StringField(required=True)
     reading = IntField(required=True)
     unit = StringField(required=True)
+    timestamp = DateTimeField(default=datetime.now)
 
     def _validate_fields(self, data):
         deviceType = data["deviceType"]
@@ -63,6 +65,7 @@ class DeviceMeasurement(Document):
             'deviceType': self.deviceType,
             'reading': self.reading,
             'unit': self.unit,
-            'userId': self.userId 
+            'userId': self.userId,
+            'timestamp': self.timestamp.strftime("%m/%d/%Y, %H:%M:%S.%f")
         }
 

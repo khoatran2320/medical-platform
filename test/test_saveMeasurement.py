@@ -19,7 +19,7 @@ def database():
     db = connect(host=URI)
 
 def test_saveDeviceMeasurement(database):
-    test_device = {
+    test_deviceMeasurement = {
         "id": "2343651",
         "deviceType": "THERMOMETER",
         "deviceId": "9012374",
@@ -29,15 +29,18 @@ def test_saveDeviceMeasurement(database):
     }   
     #save measurement
     measurement = DeviceMeasurementModel()
-    measurement.set(test_device)
+    measurement.set(test_deviceMeasurement)
     measurement.save()
+    comp_keys = ['id', 'deviceType', "deviceId", "userId", "reading","unit"]
+    retrieved_deviceMeasurement = DeviceMeasurementModel.objects(_id=test_deviceMeasurement['id']).first()
+    retrieved_deviceMeasurement = retrieved_deviceMeasurement.json()
+    for key in comp_keys:
+        if test_deviceMeasurement[key] != retrieved_deviceMeasurement[key]:
+            return False
+    return True
 
-    #retrieve device
-    retrieved_deviceMeasurement = DeviceMeasurementModel.objects(_id=test_device['id']).first()
-    return retrieved_deviceMeasurement.json() == test_device
-    
 def test_invalid_userId(database):
-    test_device = {
+    test_deviceMeasurement = {
         "id": "2343651",
         "deviceType": "THERMOMETER",
         "deviceId": "9012374",
@@ -48,14 +51,14 @@ def test_invalid_userId(database):
 
     try:
         measurement = DeviceMeasurementModel()
-        measurement.set(test_device)
+        measurement.set(test_deviceMeasurement)
         measurement.save()
         return False
     except:
         return True
 
 def test_invalid_deviceId(database):
-    test_device = {
+    test_deviceMeasurement = {
         "id": "2343651",
         "deviceType": "THERMOMETER",
         "deviceId": "does not exist",
@@ -66,14 +69,14 @@ def test_invalid_deviceId(database):
 
     try:
         measurement = DeviceMeasurementModel()
-        measurement.set(test_device)
+        measurement.set(test_deviceMeasurement)
         measurement.save()
         return False
     except:
         return True
 
 def test_invalid_unit(database):
-    test_device = {
+    test_deviceMeasurement = {
         "id": "2343651",
         "deviceType": "THERMOMETER",
         "deviceId": "9012374",
@@ -84,7 +87,7 @@ def test_invalid_unit(database):
 
     try:
         measurement = DeviceMeasurementModel()
-        measurement.set(test_device)
+        measurement.set(test_deviceMeasurement)
         measurement.save()
         return False
     except:

@@ -73,6 +73,53 @@ _user_parser.add_argument('age',
                              help="This field cannot be blank."
                              )   
 
+
+_user_put_parser = reqparse.RequestParser()
+_user_put_parser.add_argument('id',
+                            type=str,
+                            required=True,
+                            location=('args','json'),
+                            help="This field cannot be blank.")
+_user_put_parser.add_argument('firstName',
+                             type=str,
+                             required=False,
+                             location=('args','json'))
+_user_put_parser.add_argument('lastName',
+                             type=str,
+                             required=False,
+                             location=('args','json'))
+_user_put_parser.add_argument('email',
+                             type=inputs.email(check=True),
+                             required=False,
+                             location=('args','json'))
+_user_put_parser.add_argument('password',
+                             type=str,
+                             required=False,
+                             location=('args','json'))
+_user_put_parser.add_argument('userType',
+                             type=str,
+                             required=False,
+                             choices=("PATIENT", "FAMILY", "NURSE", "ADMIN", "DEVELOPER", "DOCTOR"),
+                             location=('args','json'))
+_user_put_parser.add_argument('gender',
+                             type=str,
+                             required=False,
+                             choices=("male", "female", "none_binary"),
+                             location=('args','json'))
+_user_put_parser.add_argument('dateOfBirth',
+                             type=date_type,
+                             required=False,
+                             location=('args','json'))
+_user_put_parser.add_argument('address',
+                             type=str,
+                             required=False,
+                             location=('args','json'))     
+_user_put_parser.add_argument('age',
+                             type=int,
+                             required=False,
+                             location=('args','json'))   
+
+
 _user_id_parser = reqparse.RequestParser()
 _user_id_parser.add_argument('id',
                             type=str,

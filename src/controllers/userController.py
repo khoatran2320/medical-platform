@@ -11,7 +11,7 @@ from ..utils.utils import encrypt_pass
 from ..Models.User import User as UserModel
 
 # Import parsers
-from ..parsers.user import _user_parser, _user_id_parser
+from ..parsers.user import _user_parser, _user_id_parser, _user_put_parser
 
 user_ns = Namespace('user', 'User methods')
 # api.add_namespace(user_ns)
@@ -88,7 +88,7 @@ class User(Resource):
     )
     def put(self):
         """Updates a user"""
-        data = _user_id_parser.parse_args()
+        data = _user_put_parser.parse_args()
         try:
             user = UserModel.objects(_id=data['id']).first()
             user.update(data)

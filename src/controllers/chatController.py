@@ -75,25 +75,25 @@ class Message(Resource):
         except:
             return Response("Unable to get message", status=400)
 
-    @chat_ns.doc(
-        parser=_chat_id_parser,
-        responses={
-            200: "Updated message",
-            400: "Unable to update message",
-        }
-    )
-    def put(self):
-        """Updates a message"""
-        data = _chat_id_parser.parse_args()
-        try:
-            message = ChatModel.objects(_id=data['id']).first()
-            message.update(data)
-            message.save()
-            return Response({"message": "Updated message", "message": message.json()}, status=200)
+    # @chat_ns.doc(
+    #     parser=_chat_id_parser,
+    #     responses={
+    #         200: "Updated message",
+    #         400: "Unable to update message",
+    #     }
+    # )
+    # def put(self):
+    #     """Updates a message"""
+    #     data = _chat_id_parser.parse_args()
+    #     try:
+    #         message = ChatModel.objects(_id=data['id']).first()
+    #         message.update(data)
+    #         message.save()
+    #         return Response({"message": "Updated message", "message": message.json()}, status=200)
 
-        except Exception as e:
-            print(e)
-            return Response("Unable to update message", status=400)
+    #     except Exception as e:
+    #         print(e)
+    #         return Response("Unable to update message", status=400)
 
     @chat_ns.doc(
         parser=_chat_id_parser,
