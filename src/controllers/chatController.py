@@ -4,6 +4,7 @@ from ..Response import Response
 
 # Import models
 from ..Models.Chat import Chat as ChatModel
+from ..Models.User import User as UserModel
 
 # Import parsers
 from ..parsers.chat import _chat_parser, _chat_id_parser, _chat_user_parser, _chat_number_parser
@@ -31,6 +32,13 @@ class Messages(Resource):
         new_message.set(data)
 
         try:
+            from_user = UserModel.objects(_id=data['fromUser']).first()
+            if not from_user:
+                raise ValueError
+
+            to_user = UserModel.objects(_id=data['toUser']).first()
+            if not to_user:
+                raise ValueError
             new_message.save()
             return Response("Added message", status=200)
         except:
@@ -48,7 +56,7 @@ class Messages(Resource):
             data = ChatModel.objects.all()
             # serialize
             messages = [message.json() for message in data]
-            return Response({"message": "Get message successfully", "chats": messages}, status=200)
+            return Response({"message": "Get messages successfully", "chats": messages}, status=200)
         except Exception as e:
             print(e)
             return Response("Unable to get messages",status=400)
