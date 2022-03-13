@@ -36,4 +36,56 @@ def test_saveDeviceMeasurement(database):
     retrieved_deviceMeasurement = DeviceMeasurementModel.objects(_id=test_device['id']).first()
     return retrieved_deviceMeasurement.json() == test_device
     
+def test_invalid_userId(database):
+    test_device = {
+        "id": "2343651",
+        "deviceType": "THERMOMETER",
+        "deviceId": "9012374",
+        "userId": "does not exist",
+        "reading": "94",
+        "unit": "fahrenheit"
+    }   
 
+    try:
+        measurement = DeviceMeasurementModel()
+        measurement.set(test_device)
+        measurement.save()
+        return False
+    except:
+        return True
+
+def test_invalid_deviceId(database):
+    test_device = {
+        "id": "2343651",
+        "deviceType": "THERMOMETER",
+        "deviceId": "does not exist",
+        "userId": "9011232374",
+        "reading": "94",
+        "unit": "fahrenheit"
+    }   
+
+    try:
+        measurement = DeviceMeasurementModel()
+        measurement.set(test_device)
+        measurement.save()
+        return False
+    except:
+        return True
+
+def test_invalid_unit(database):
+    test_device = {
+        "id": "2343651",
+        "deviceType": "THERMOMETER",
+        "deviceId": "9012374",
+        "userId": "9011232374",
+        "reading": "94",
+        "unit": "pound"
+    }   
+
+    try:
+        measurement = DeviceMeasurementModel()
+        measurement.set(test_device)
+        measurement.save()
+        return False
+    except:
+        return True
