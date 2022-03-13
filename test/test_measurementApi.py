@@ -131,3 +131,13 @@ def test_delete_device(app, client):
     })
     assert response.status_code == 400
     assert response.json['message'] == 'Unable to get measurement'
+
+def test_query_user_measurements(app, client):
+    url = f'{BASE_URL}/user'
+    data = {
+        "userId": "9011232374"
+    }
+    response = client.get(url, json=data)
+    assert response.status_code == 200
+    assert response.json['message'] == 'Get user measurements successfully'
+    
