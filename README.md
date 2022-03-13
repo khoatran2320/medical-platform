@@ -41,6 +41,9 @@ The platform allows for multiple user roles such as doctors, patients, nurses, a
     <li>
       <a href="#tests">Tests</a>
     </li>
+    <li>
+      <a href="#database">Database</a>
+    </li>
   </ol>
 </details>
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -157,4 +160,9 @@ To run pytest:
 ```
 pytest
 ```
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Database  
+This project uses a live mongobd database as its main consistent storage mechanism. The database uses IP address filtering to enfore security measures. The author must enable database access for all IP addresses for the project to function properly. 
+
 <p align="right">(<a href="#top">back to top</a>)</p>
