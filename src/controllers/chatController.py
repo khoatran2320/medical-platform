@@ -37,7 +37,7 @@ class Messages(Resource):
             return Response("Unable to add message", status=400)
 
     @chat_ns.doc(
-        response={
+        responses={
             200: "Get messages successfully",
             400: "Unable to get messages",
         }

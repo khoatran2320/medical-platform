@@ -50,7 +50,7 @@ class Measurements(Resource):
             return Response("Unable to add measurement", status=400)
 
     @device_measurement_ns.doc(
-        response={
+        responses={
             200: "Get measurements successfully",
             400: "Unable to get measurements",
         }

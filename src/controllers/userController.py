@@ -42,7 +42,7 @@ class Users(Resource):
             return Response("Unable to add user", status=400)
 
     @user_ns.doc(
-        response={
+        responses={
             200: "Get users successfully",
             400: "Unable to get users",
         }

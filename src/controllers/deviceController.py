@@ -1,3 +1,4 @@
+from http.client import responses
 from os import stat
 from flask import Blueprint
 from flask_restx import Resource, Namespace, Api
@@ -43,7 +44,7 @@ class Devices(Resource):
             return Response("Unable to add device", status=400)
 
     @device_ns.doc(
-        response={
+        responses={
             200: "Get devices successfully",
             400: "Unable to get devices",
         }
