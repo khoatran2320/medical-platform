@@ -104,6 +104,11 @@ To activate the virtual environment:
 source venv/bin/activate (macOS/*nix)
 venv/bin/activate.cmd (Windows)
 ```
+
+To allow run script execution:
+```
+chmod +x run.sh
+```
 ### Prerequisites Installation
 To install the requirements of this repository:
 
@@ -119,7 +124,7 @@ pip install -r requirements.txt
 ### Usage  
 1. Run Flask App
 ```
-python src/app.py
+./run.sh
 ```
 OR
 
