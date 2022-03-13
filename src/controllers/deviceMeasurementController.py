@@ -9,7 +9,7 @@ from ..Models.User import User as UserModel
 
 
 # Import parsers
-from ..parsers.device_measurement import _measurement_parser, _measurement_id_parser, _measurement_userId_parser
+from ..parsers.device_measurement import _measurement_parser, _measurement_id_parser, _measurement_userId_parser, _measurement_put_parser
 
 device_measurement_ns = Namespace('device-measurements', 'Device measurement methods')
 # api.add_namespace(device_measurement_ns)
@@ -97,7 +97,7 @@ class Measurement(Resource):
     )
     def put(self):
         """Updates a measurement"""
-        data = _measurement_id_parser.parse_args()
+        data = _measurement_put_parser.parse_args()
         try:
             measurement = DeviceMeasurementModel.objects(_id=data['id']).first()
             measurement.update(data)
