@@ -1,18 +1,17 @@
-from http.client import responses
 from os import stat
 from flask import Blueprint
 from flask_restx import Resource, Namespace, Api
-from ..Response import Response
+from Response import Response
 
 
 # blueprint = Blueprint('api', __name__)
 # api = Api(blueprint, doc='/doc/')
 
 # Import models
-from ..Models.Device import Device as DeviceModel
+from Models.Device import Device as DeviceModel
 
 # Import parsers
-from ..parsers.device import _device_parser, _device_id_parser
+from parsers.device import _device_parser, _device_id_parser
 
 device_ns = Namespace('device', 'Device methods')
 # api.add_namespace(device_ns)
