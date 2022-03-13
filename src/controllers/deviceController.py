@@ -2,7 +2,7 @@ from http.client import responses
 from os import stat
 from flask import Blueprint
 from flask_restx import Resource, Namespace, Api
-from Response import Response
+from ..Response import Response
 
 
 # blueprint = Blueprint('api', __name__)
