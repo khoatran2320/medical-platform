@@ -61,7 +61,7 @@ class Measurements(Resource):
             data = DeviceMeasurementModel.objects.all()
             # serialize
             measurements = [measurement.json() for measurement in data]
-            return Response({"message": "Get measurement successfully", "measurements": measurements}, status=200)
+            return Response({"message": "Get measurements successfully", "measurements": measurements}, status=200)
         except Exception as e:
             print(e)
             return Response("Unable to get measurements",status=400)

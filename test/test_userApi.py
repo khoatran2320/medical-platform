@@ -5,7 +5,7 @@ BASE_URL = '/api/1/user'
 
 def test_add_valid_user(app, client):
     """Test adding a valid user"""
-    # add a device
+    # add a user
     url = f'{BASE_URL}/'
     data = {
         "id": "123252",
@@ -117,8 +117,8 @@ def test_invalid_update(app, client):
     assert response.status_code == 400
     assert response.json['message'] == 'Unable to update user'
 
-def test_delete_device(app, client):
-    # add a device
+def test_delete_user(app, client):
+    # add a user
     url = f'{BASE_URL}/'
     data = {
         "id": "5435432",
@@ -136,7 +136,7 @@ def test_delete_device(app, client):
     assert response.status_code == 200
     assert response.json['message'] == 'Added user'
 
-    # delete the device
+    # delete the user
     url = f'{BASE_URL}/detail'
     response = client.delete(url, query_string={
         "id": "5435432",
@@ -144,7 +144,7 @@ def test_delete_device(app, client):
     assert response.status_code == 200
     assert response.json['message'] == 'Deleted user'
 
-    # get the same device, should be 400 status code
+    # get the same user, should be 400 status code
     url = f'{BASE_URL}/detail'
     response = client.get(url, query_string={
         "id": "5435432"

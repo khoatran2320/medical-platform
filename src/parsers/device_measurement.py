@@ -27,7 +27,7 @@ _measurement_parser.add_argument('reading',
                              help="This field cannot be blank.")
 _measurement_parser.add_argument('unit',
                              type=str, 
-                             choices=('celsius', 'fahrenheit', 'pound', 'kilogram', 'bpm', 'percent'
+                             choices=('celsius', 'fahrenheit', 'pound', 'kilogram', 'bpm', 'percent',
                                       'mg/dl', 'mmhg'),
                              required=True,
                              location=('args','json'),
@@ -61,7 +61,7 @@ _measurement_put_parser.add_argument('reading',
                              location=('args','json'))
 _measurement_put_parser.add_argument('unit',
                              type=str, 
-                             choices=('celsius', 'fahrenheit', 'pound', 'kilogram', 'bpm', 'percent'
+                             choices=('celsius', 'fahrenheit', 'pound', 'kilogram', 'bpm', 'percent',
                                       'mg/dl', 'mmhg'),
                              required=False,
                              location=('args','json'))
