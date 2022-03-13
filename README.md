@@ -36,9 +36,6 @@ The platform allows for multiple user roles such as doctors, patients, nurses, a
       </ul>
     </li>
     <li>
-      <a href="#live-server">Live Server</a>
-    </li>
-    <li>
       <a href="#documentation">Documentation</a>
     </li>
     <li>
@@ -142,12 +139,6 @@ OR
   docker-compose up --build
   ```
 Flask app runs on http://localhost:5000/
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-## Live Server
-
-The project is currently deployed live inside an AWS EC2 instance at http://18.209.18.230:5000/.
-
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- DOCUMENTATION  -->
