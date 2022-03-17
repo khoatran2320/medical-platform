@@ -54,7 +54,7 @@ def speech_2_text():
         return Response("No file detected", status=400)
     
     if audioFile.filename == "":
-        return Response("Invalid name", statud=400)
+        return Response("Invalid name", status=400)
     audioFile.save("speech_to_text/"+audioFile.filename)
     print("WORKING")
     r = worker.send_task('task.speech_2_text', kwargs={'afile': audioFile.filename})
