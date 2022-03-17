@@ -1,0 +1,2 @@
+celery==5.2.3
+pymongo[tls,srv]==3.6.1

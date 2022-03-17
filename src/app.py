@@ -1,10 +1,13 @@
+from asyncio import tasks
 import os
 import logging 
-from flask import Flask, Blueprint, redirect
+from flask import Flask, Blueprint, redirect, request
 from flask_restx import Api
 from flask_cors import CORS
 from mongoengine import connect
+from celery import Celery
 from .controllers.appV1 import blueprint as api1
+from .Response import Response
 
 """
 logging config
@@ -37,6 +40,34 @@ Flask startup
 app = Flask(__name__)
 app.register_blueprint(api1)
 CORS(app)
+
+worker = Celery('speech_2_text_tasks',
+                    broker='amqp://admin:mypass@rabbit:5672',
+                    backend='mongodb://mongodb_container:27017/mydb')
+
+@app.route('/speech-2-text/start', methods=["POST"])
+def speech_2_text():
+    audioFile = None
+    try:
+        audioFile = request.files['audioFile']
+    except:
+        print("No audio file")
+    print("WORKING")
+    r = worker.send_task('task.speech_2_text', kwargs={'audioFile': audioFile})
+    return Response(r.id, status=200)
+
+@app.route('/speech-2-text/status/<task_id>')
+def status(task_id):
+    status = worker.AsyncResult(task_id, app=worker)
+
+    return Response({'status': str(status.state)}, status=200)
+
+@app.route('/speech-2-text/result/<task_id>')
+def result(task_id):
+    result = worker.AsyncResult(task_id).result
+    print(result)
+    return Response({'result': str(result)}, status=200)
+
 
 @app.route('/', methods=["GET"])
 def home():
