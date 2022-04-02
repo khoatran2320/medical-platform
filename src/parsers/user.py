@@ -43,7 +43,7 @@ _user_parser.add_argument('password',
 _user_parser.add_argument('userType',
                              type=str,
                              required=True,
-                             choices=("PATIENT", "FAMILY", "NURSE", "ADMIN", "DEVELOPER", "DOCTOR"),
+                             choices=("patient", "family", "nurse", "admin", "developer", "doctor"),
                              location=('args','json'),
                              help="This field cannot be blank."
                              )
@@ -99,7 +99,7 @@ _user_put_parser.add_argument('password',
 _user_put_parser.add_argument('userType',
                              type=str,
                              required=False,
-                             choices=("PATIENT", "FAMILY", "NURSE", "ADMIN", "DEVELOPER", "DOCTOR"),
+                             choices=("patient", "family", "nurse", "admin", "developer", "doctor"),
                              location=('args','json'))
 _user_put_parser.add_argument('gender',
                              type=str,

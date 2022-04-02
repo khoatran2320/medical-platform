@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,6 +20,9 @@ import FormControl from '@mui/material/FormControl';
 import DatePicker from '@mui/lab/DatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import uuid from 'react-uuid';
+const axios = require('axios').default;
+
 
 function Copyright(props) {
   return (
@@ -39,18 +43,38 @@ export default function RegistrationPage() {
   const [date, setDate] = React.useState('');
   const [gender, setGender] = React.useState('non-binary');
   const [userType, setUserType] = React.useState('patient');
-
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log(data.get('firstName'))
-    console.log(data.get('lastName'))
-    console.log(data.get('email'))
-    console.log(data.get('password'))
-    console.log("age: " + document.getElementById("number").value);
-    console.log("date: " + date);
-    console.log("gender: " + gender);
-    console.log("usertype: " + userType);
+    const load = {
+      id: uuid(),
+      firstName: data.get('firstName'),
+      lastName: data.get('lastName'),
+      email: data.get('email'),
+      password: data.get('password'),
+      age: document.getElementById("number").value,
+      dateOfBirth: date.toLocaleDateString(),
+      gender: gender,
+      userType: userType, 
+      address: ''
+    }
+    console.log(load);
+    // axios({
+    //   method: 'post',
+    //   url: 'http://localhost:5000/api/1/user/',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: load
+    // })
+    axios.post('http://localhost:5000/api/1/user/', load)
+    .then((msg)=>{
+      console.log(msg.data)
+      navigate('/signin')
+    }).catch((e)=>{
+      console.log(e);
+    });
   };
 
   return (

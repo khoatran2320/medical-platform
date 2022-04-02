@@ -38,7 +38,8 @@ class Users(Resource):
         try:
             new_user.save()
             return Response("Added user", status=200)
-        except:
+        except Exception as e:
+            print(e)
             return Response("Unable to add user", status=400)
 
     @user_ns.doc(
@@ -56,7 +57,7 @@ class Users(Resource):
             return Response({"message": "Get users successfully", "users": users}, status=200)
         except:
             return Response("Unable to get users", status=400)
-
+    
 
 @user_ns.route('/detail')
 class User(Resource):
