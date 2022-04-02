@@ -1,8 +1,8 @@
-from mongoengine import (Document, StringField, DateTimeField)
+from mongoengine import (Document, StringField, DateTimeField, EmbeddedDocument, ListField, EmbeddedDocumentField)
 from datetime import datetime
 from json import dumps
 
-class Chat(Document):
+class Chat(EmbeddedDocument):
     _id = StringField(required=True, primary_key=True)
     timestamp = DateTimeField(default=datetime.now)
     fromUser = StringField(required=True)
@@ -47,3 +47,22 @@ class Chat(Document):
             'content': self.content,
             'attachment': self.attachment,
         }
+
+class ChatRoom(Document):
+    _id = StringField(required=True, primary_key=True)
+    users = ListField(StringField(), required=True)
+    chats = ListField(EmbeddedDocumentField(Chat))
+
+    def set(self, data):
+        self._id = data['id']
+        self.users = data['users']
+
+    def get_id(self):
+        return self._id
+
+    def add_chat(self, chat):
+        try:
+            self.chats.append(chat)
+            self.save()
+        except:
+            raise Exception('Unable to add chat')

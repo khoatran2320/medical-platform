@@ -41,6 +41,9 @@ app = Flask(__name__)
 app.register_blueprint(api1)
 CORS(app)
 
+"""
+Text to speech
+"""
 worker = Celery('speech_2_text_tasks',
                     broker='amqp://admin:mypass@rabbit:5672',
                     backend='mongodb://mongodb_container:27017/mydb')
