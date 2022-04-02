@@ -36,14 +36,21 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function RegistrationPage() {
-  const [value, setValue] = React.useState(null);
+  const [date, setDate] = React.useState('');
+  const [gender, setGender] = React.useState('non-binary');
+  const [userType, setUserType] = React.useState('patient');
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    console.log(data.get('firstName'))
+    console.log(data.get('lastName'))
+    console.log(data.get('email'))
+    console.log(data.get('password'))
+    console.log("age: " + document.getElementById("number").value);
+    console.log("date: " + date);
+    console.log("gender: " + gender);
+    console.log("usertype: " + userType);
   };
 
   return (
@@ -112,9 +119,13 @@ export default function RegistrationPage() {
                 <FormControl sx={{ minWidth: 190 }}>
                     <InputLabel id="demo-simple-select-helper-label">Gender</InputLabel>
                     <Select
+                        defaultValue={''}
                         labelId="demo-simple-select-helper-label"
-                        id="demo-simple-select-helper"
+                        id="gender"
                         label="Gender"
+                        onChange={(event) => {
+                          setGender(event.target.value);
+                        }}
                     >
                         <MenuItem value='male'>Male</MenuItem>
                         <MenuItem value='female'>Female</MenuItem>
@@ -137,23 +148,28 @@ export default function RegistrationPage() {
                   <DatePicker
                     views={['year', 'month', 'day']}
                     label="Date of Birth"
-                    // value={value}
+                    defaultValue={''}
                     onChange={(newValue) => {
-                      setValue(newValue);
+                      setDate(newValue);
                     }}
                     renderInput={(params) => <TextField {...params} helperText={null} />}
                   />
                 </LocalizationProvider> 
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={6} >
                 <FormControl sx={{ minWidth: 190 }}>
                     <InputLabel id="demo-simple-select-helper-label">User Type</InputLabel>
                     <Select
                         labelId="demo-simple-select-helper-label"
-                        id="demo-simple-select-helper"
+                        id="user-type-selecter"
                         label="user-type"
+                        defaultValue={''}
+                        onChange={(event) => {
+                          setUserType(event.target.value);
+                        }}
                     >
                         <MenuItem value='doctor'>Doctor</MenuItem>
+                        <MenuItem value='nurse'>Nurse</MenuItem>
                         <MenuItem value='patient'>Patient</MenuItem>
                     </Select>
                 </FormControl>
